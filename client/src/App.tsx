@@ -1,18 +1,22 @@
-import axios from 'axios'
-import './App.css'
+import { Route, BrowserRouter, Routes } from "react-router-dom"
+
+import HomePage from "./pages/home-page"
+import SignUpPage from "./pages/auth/sign-up-page"
+import LoginPage from "./pages/auth/login-page"
+import Header from "./components/global/header"
+import Footer from "./components/global/footer"
 
 function App() {
-  const handleSubmit = async () => {
-   await axios.post("http://localhost:3000/auth/signup", {
-      email: "bhai_hai_madar@gmail.com",
-      password: "Keyamondal@123"
-    })
-  }
-
   return (
-    <div>
-      <button onClick={handleSubmit}>POST req</button>
-    </div>
+    <BrowserRouter>
+    <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/auth/signup" element={<SignUpPage />} />
+        <Route path="/auth/login" element={<LoginPage />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   )
 }
 
