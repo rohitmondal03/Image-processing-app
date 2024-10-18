@@ -1,44 +1,16 @@
-import { FormEvent, useState } from "react"
-import { Link, useNavigate, Form } from "react-router-dom"
+import { useState } from "react"
+import { Form, Link, } from "react-router-dom"
 import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react"
 
-import { signUpUser } from "@/utils/functions/auth/sign-up"
-import { useToast } from "@/hooks/use-toast"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { FormSubmitButton } from "@/components/buttons/form-submit-button"
 
 function SignUpPage() {
-  const { toast } = useToast();
-  const navigate= useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: ""
-  })
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
-  }
-
-  // handle sign up
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const status = await signUpUser(user)
-
-    if(status == 403) {
-      toast({
-        title: "User already exists",
-        description: "This E-Mail already exits !!"
-      })
-      return;
-    }
-
-    toast({
-      title: "Signed in successfully"
-    })
-    navigate("/dashboard")
   }
 
   return (
@@ -59,10 +31,7 @@ function SignUpPage() {
             </Link>
           </p>
         </div>
-        <form
-          className="mt-8 space-y-6"
-          onSubmit={handleSubmit}
-        >
+        <Form method="post" className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
               <Label htmlFor="email-address" className="sr-only">
@@ -76,11 +45,6 @@ function SignUpPage() {
                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                 placeholder="Email address"
                 autoComplete="off"
-                value={user.email}
-                onChange={e => setUser(prev => ({
-                  ...prev,
-                  email: e.target.value,
-                }))}
               />
             </div>
             <div>
@@ -95,11 +59,6 @@ function SignUpPage() {
                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                 placeholder="Your Name"
                 autoComplete="off"
-                value={user.name}
-                onChange={e => setUser(prev => ({
-                  ...prev,
-                  name: e.target.value,
-                }))}
               />
             </div>
             <div className="relative">
@@ -114,11 +73,6 @@ function SignUpPage() {
                 required
                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                 placeholder="Password"
-                value={user.password}
-                onChange={e => setUser(prev => ({
-                  ...prev,
-                  password: e.target.value,
-                }))}
               />
               <button
                 type="button"
@@ -133,13 +87,10 @@ function SignUpPage() {
               </button>
             </div>
           </div>
-          <div>
-            {/* <MemoLoadingButton isLoading={isLoading} className="w-full">
-              Sign Up
-            </MemoLoadingButton> */}
-            <Button type="submit" className="w-full">Sign Up</Button>
-          </div>
-        </form>
+          <FormSubmitButton>
+            Sign Up
+          </FormSubmitButton>
+        </Form>
       </div>
     </div>
   )

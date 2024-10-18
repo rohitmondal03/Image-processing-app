@@ -3,13 +3,9 @@ import cors from "cors"
 import bodyParser from "body-parser"
 import { config } from "dotenv"
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
-import { v4 as uuid } from "uuid"
 
 import { PORT } from "./config"
 import { authRouter } from "./routes/auth.routes"
-import { UserModel } from "./db/models"
-import { isUserExistingMiddleware } from "./middlewares/auth.middleware"
 
 config();
 
@@ -22,7 +18,7 @@ server.use(cors());
 server.use(express.json({}));
 
 server.use("/dashboard", authRouter)
-server.use("/auth", isUserExistingMiddleware, authRouter)
+server.use("/auth", authRouter)
 
 // listen on specified PORT number
 server.listen(PORT)

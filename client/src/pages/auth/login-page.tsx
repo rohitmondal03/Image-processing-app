@@ -1,13 +1,14 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import {  useState } from "react"
+import { Form, Link } from "react-router-dom"
 import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { FormSubmitButton } from "@/components/buttons/form-submit-button"
+
 
 export default function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -28,7 +29,7 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
-        <form className="mt-8 space-y-6" action="#" method="POST">
+        <Form method="post" className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
               <Label htmlFor="email-address" className="sr-only">
@@ -71,14 +72,11 @@ export default function LoginPage() {
             </div>
           </div>
           <div>
-            <Button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-            >
-              Login
-            </Button>
+            <FormSubmitButton>
+              Log In
+            </FormSubmitButton>
           </div>
-        </form>
+        </Form>
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
-function Dashboard() {
+function DashboardPage() {
   return (
     <div>Dashboard</div>
   )
 }
 
-export default Dashboard
+export default DashboardPage

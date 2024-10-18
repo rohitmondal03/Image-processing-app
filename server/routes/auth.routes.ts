@@ -3,11 +3,12 @@ import bcrypt from "bcrypt"
 import { v4 as uuid } from "uuid"
 
 import { UserModel } from "../db/models";
+import { signInMiddleware, signUpMiddleware } from "../middlewares/auth.middleware";
 
 export const authRouter = express.Router();
 
-// signup route
-authRouter.post("/signup", async (req, res, next) => {
+// sign-up route
+authRouter.post("/signup", signUpMiddleware, async (req, res, next) => {
   const body = req.body;
   const email = body.email;
   const password = body.password;
@@ -28,5 +29,23 @@ authRouter.post("/signup", async (req, res, next) => {
     res.json(userData)
   } catch (err) {
     next(err)
+  }
+})  
+
+// sign-in route
+authRouter.post("/signin", signInMiddleware, async (req, res, next) => {
+  const body = req.body;
+  const email = body.email;
+  const password = body.password;
+
+  const userData = await UserModel.findOne({ email })
+  const isPasswordCorrect = await bcrypt.compare(password, userData?.password ?? "")
+
+  if (!isPasswordCorrect) {
+    res.status(401).json({
+      message: "Password entered is incorrect !!"
+    })
+  } else {
+    next();
   }
 })

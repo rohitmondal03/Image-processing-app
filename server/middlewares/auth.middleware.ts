@@ -2,13 +2,13 @@ import type { NextFunction, Response, Request } from "express";
 
 import { UserModel } from "../db/models";
 
-export const isUserExistingMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const signUpMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const body = req.body;
   const email = body.email;
 
   if (!email) {
-    res.status(400).json({ 
-      message: "Email is required" 
+    res.status(400).json({
+      message: "Email is required"
     });
   }
 
@@ -18,7 +18,22 @@ export const isUserExistingMiddleware = async (req: Request, res: Response, next
     res.status(403).json({
       message: "User already exists!"
     });
-  }else {
+  } else {
+    next();
+  }
+}
+
+export const signInMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+  const body = req.body;
+  const email = body.email;
+
+  const user = await UserModel.exists({ email })
+
+  if (!user) {
+    res.status(401).json({
+      message: "User not found !!"
+    })
+  } else {
     next();
   }
 }
