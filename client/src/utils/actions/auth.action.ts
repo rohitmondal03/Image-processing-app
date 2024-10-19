@@ -13,9 +13,10 @@ export const logInUserAction = async ({ request } : ActionFunctionArgs) => {
 
   const resp = await fetch(SERVER_BASE_URL + "/auth/signin", {
     method: "POST",
+    credentials: "omit",
     body: JSON.stringify({ email, password }),
     headers: {
-      "Content-type": "application/json"
+      "Content-type": "application/json",
     }
   })
 

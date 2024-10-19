@@ -3,6 +3,7 @@ import cors from "cors"
 import bodyParser from "body-parser"
 import { config } from "dotenv"
 import mongoose from "mongoose"
+import cookieParser from "cookie-parser"
 
 import { PORT } from "./config"
 import { authRouter } from "./routes/auth.routes"
@@ -14,8 +15,12 @@ const server = express();
 
 // Middlewares
 server.use(bodyParser.json());
-server.use(cors());
 server.use(express.json({}));
+server.use(cookieParser())
+server.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 
 server.use("/dashboard", authRouter)
 server.use("/auth", authRouter)

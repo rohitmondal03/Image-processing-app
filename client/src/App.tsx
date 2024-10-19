@@ -6,6 +6,7 @@ import HomePage from './pages/home-page.tsx'
 import SignUpPage from './pages/auth/sign-up-page.tsx'
 import LoginPage from './pages/auth/login-page.tsx'
 import DashboardPage from './pages/protected/dashboard.tsx'
+import { RootProvider } from "@/components/providers/root-provider.tsx"
 
 const router = createBrowserRouter([
   {
@@ -29,11 +30,7 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
